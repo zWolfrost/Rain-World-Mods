@@ -28,7 +28,7 @@
 		"food_min": 5,
 		"food_max": 11,
 		"world_state": ["Spear", "Red"],
-		"start_room": ["SI_S04"],
+		"start_room": ["SI_A09x", "SI_S04"],
 
 		"guide_overseer": 2,
 

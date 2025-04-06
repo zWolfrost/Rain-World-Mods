@@ -13,6 +13,7 @@ public partial class CentiwingPlayerData
 			player.mainBodyChunk.vel.y < 0 &&
 			player.canWallJump == 0 &&
 			player.Consious &&
+			player.room.gravity > 0.5f &&
 			player.bodyMode != Player.BodyModeIndex.Crawl &&
 			player.bodyMode != Player.BodyModeIndex.CorridorClimb &&
 			player.bodyMode != Player.BodyModeIndex.ClimbIntoShortCut &&
@@ -40,8 +41,6 @@ public partial class Plugin
 		{
          centiwing.currentGlideDuration++;
 
-			self.customPlayerGravity = 0f;
-
 			for (int i = 0; i < self.bodyChunks.Length; i++)
 			{
 				self.bodyChunks[i].vel.y = Mathf.Lerp(
@@ -54,8 +53,6 @@ public partial class Plugin
 			if (!centiwing.CanGlide())
 			{
 				centiwing.isGliding = false;
-
-				self.customPlayerGravity = self.room.gravity;
 			}
 		}
 		else if (centiwing.CanGlide())

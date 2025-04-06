@@ -1,5 +1,3 @@
-// For the wings I copied a lot of code from the beecat mod, thanks beecat
-
 public partial class CentiwingPlayerData
 {
 	public const int addedSprites = 26;
@@ -58,7 +56,7 @@ public partial class CentiwingPlayerData
 
 	// Chest //
 	public const float chestOffset = 1.25f;
-	public const float chestScaleX = 0.7f;
+	public const float chestScaleX = 0.75f;
 
 	public const int chestNumber = 3;
 	public const string chestColor = "1f1f1f";
@@ -131,7 +129,7 @@ public partial class Plugin
 		CentiwingPlayerData centiwing = self.player.Centiwing();
 		if (!centiwing.IsCentiwing) return;
 
-		/* Logger.LogInfo("AddToContainer - " + sLeaser.sprites.Length + " - " + centiwing.initialWingSprite); */
+		/* Logger.LogInfo("AddToContainer - " + sLeaser.sprites.Length + " - " + centiwing.firstWingSprite); */
 
 		// There's probably a better way to check for this, but this will do fine
 		if (centiwing.firstWingSprite > 0 && sLeaser.sprites.Length >= centiwing.firstWingSprite + CentiwingPlayerData.addedSprites)

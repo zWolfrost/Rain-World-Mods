@@ -35,6 +35,7 @@ public partial class Plugin : BaseUnityPlugin
 			On.PlayerGraphics.DrawSprites += PlayerGraphics_DrawSprites;
 			On.PlayerGraphics.Update += PlayerGraphics_Update;
 
+			On.Player.Update += Player_Spawn;
 			On.Player.Update += Player_Glide;
 			On.Player.Update += Player_Shock;
 		}
