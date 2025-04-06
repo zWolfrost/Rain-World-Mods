@@ -1,0 +1,12 @@
+{
+	"frames": {
+		"centiwing_suction.png":
+		{
+			"frame": {"x":2,"y":2,"w":4,"h":4},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":4,"h":4},
+			"sourceSize": {"w":4,"h":4}
+		}
+	}
+}

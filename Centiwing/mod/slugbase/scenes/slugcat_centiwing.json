@@ -1,0 +1,21 @@
+{
+	"id": "slugcat_centiwing",
+	"scene_folder": "scenes/slugcat - centiwing",
+	"images": [
+		{"name": "background", "pos": [289, 195], "depth": 6, "shader": "Basic"},
+		{"name": "background_2", "pos": [289, 195], "depth": 5.2, "shader": "Basic"},
+		{"name": "background_4", "pos": [289, 195], "depth": 4.5, "shader": "Basic"},
+		{"name": "background_1", "pos": [289, 195], "depth": 3.9, "shader": "Basic"},
+		{"name": "centiwing", "pos": [289, 195], "depth": 3.3, "shader": "Basic"},
+		{"name": "lights", "pos": [289, 195], "depth": 3.1, "shader": "Basic"},
+		{"name": "front_3", "pos": [289, 195], "depth": 2.6, "shader": "Basic"},
+		{"name": "front_2", "pos": [289, 195], "depth": 2.4, "shader": "Basic"},
+		{"name": "front_4", "pos": [289, 195], "depth": 2.2, "shader": "Basic"},
+		{"name": "front_1", "pos": [289, 195], "depth": 2, "shader": "Basic"}
+	],
+	"idle_depths": [ 3.5 ],
+	"glow_pos": [688, 484],
+	"mark_pos": [689, 583],
+	"select_menu_pos": [0, 0],
+	"slugcat_depth": 3.5
+}

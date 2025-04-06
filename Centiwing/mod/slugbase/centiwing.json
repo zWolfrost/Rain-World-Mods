@@ -1,0 +1,39 @@
+{
+	"id": "centiwing",
+	"name": "Centiwing",
+	"description": "Can use its wings to glide. Has a unique ability to create a shockwave that stuns enemies.",
+	"features": {
+		"color": "50aa51",
+
+		"custom_colors": [
+			{"name": "Body", "story": "272928"},
+			{"name": "Eyes", "story": "50aa51"},
+			{"name": "Gills", "story": "50aa51"}
+		],
+
+		"weight": 0.95,
+		"tunnel_speed": 1.4,
+		"climb_speed": 1.6,
+		"walk_speed": 1.4,
+		"crouch_stealth": 0.6,
+		"throw_skill": 2,
+		"diet": {
+			"base": "White",
+			"corpses": 0.5,
+			"meat": 0.5,
+			"plants": 0.5
+		},
+		"karma": 0,
+		"karma_cap": 9,
+		"food_min": 5,
+		"food_max": 11,
+		"world_state": ["Spear", "Red"],
+		"start_room": ["SI_S04"],
+
+		"guide_overseer": 2,
+
+		"select_menu_scene": "slugcat_centiwing",
+		"select_menu_scene_ascended": "ghost_centiwing",
+		"sleep_scene": "sleep_centiwing"
+	}
+}

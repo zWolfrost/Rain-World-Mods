@@ -1,0 +1,20 @@
+{
+	"frames": {
+		"centiwing_wings_top.png":
+		{
+			"frame": {"x":2,"y":2,"w":22,"h":15},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":22,"h":15},
+			"sourceSize": {"w":22,"h":15}
+		},
+		"centiwing_wings_bottom.png":
+		{
+			"frame": {"x":2,"y":20,"w":17,"h":12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
+			"sourceSize": {"w":17,"h":12}
+		}
+	}
+}

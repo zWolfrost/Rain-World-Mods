@@ -1,0 +1,11 @@
+{
+	"id": "zWolfrost.Centiwing",
+	"name": "Centiwing",
+	"version": "1.0.0",
+	"authors": "zWolfrost, Gullswoop",
+	"description": "Centiwing slug because i wanted to try out rain world modding",
+	"requirements": ["slime-cubed.slugbase"],
+	"requirements_names": ["SlugBase"],
+	"checksum_override_version": true,
+	"tags": ["Game Mechanics", "Custom Slugcat"]
+}

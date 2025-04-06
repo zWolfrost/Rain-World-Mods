@@ -1,0 +1,90 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>Latest</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="0Harmony">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/0Harmony.dll</HintPath>
+		</Reference>
+		<Reference Include="0Harmony20">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/0Harmony20.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp-firstpass">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/Assembly-CSharp-firstpass.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="BepInEx">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/BepInEx.dll</HintPath>
+		</Reference>
+		<Reference Include="BepInEx.Harmony">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/BepInEx.Harmony.dll</HintPath>
+		</Reference>
+		<Reference Include="BepInEx.Preloader">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/BepInEx.Preloader.dll</HintPath>
+		</Reference>
+		<Reference Include="com.rlabrecque.steamworks.net">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/com.rlabrecque.steamworks.net.dll</HintPath>
+		</Reference>
+		<Reference Include="GoKit">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/GoKit.dll</HintPath>
+		</Reference>
+		<Reference Include="HarmonyXInterop">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/HarmonyXInterop.dll</HintPath>
+		</Reference>
+		<Reference Include="HOOKS-Assembly-CSharp">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/HOOKS-Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="Mono.Cecil">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/Mono.Cecil.dll</HintPath>
+		</Reference>
+		<Reference Include="Mono.Cecil.Mdb">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/Mono.Cecil.Mdb.dll</HintPath>
+		</Reference>
+		<Reference Include="Mono.Cecil.Pdb">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/Mono.Cecil.Pdb.dll</HintPath>
+		</Reference>
+		<Reference Include="Mono.Cecil.Rocks">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/Mono.Cecil.Rocks.dll</HintPath>
+		</Reference>
+		<Reference Include="MonoMod">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/MonoMod.dll</HintPath>
+		</Reference>
+		<Reference Include="MonoMod.RuntimeDetour">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/MonoMod.RuntimeDetour.dll</HintPath>
+		</Reference>
+		<Reference Include="MonoMod.Utils">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/MonoMod.Utils.dll</HintPath>
+		</Reference>
+		<Reference Include="PUBLIC-Assembly-CSharp">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/PUBLIC-Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="SlugBase">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/SlugBase.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Mathematics">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/Unity.Mathematics.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/UnityEngine.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ImageConversionModule">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/UnityEngine.ImageConversionModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.InputLegacyModule">
+			<HintPath>/home/zwolfrost/Desktop/Centiwing/src/lib/UnityEngine.InputLegacyModule.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="cp &quot;$(TargetPath)&quot; &quot;$(ProjectDir)../mod/plugins&quot;"/>
+	</Target>
+
+</Project>
