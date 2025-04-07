@@ -55,22 +55,11 @@ public partial class Plugin
 					if (distance < minDistance) minDistance = distance;
 				}
 
-				Logger.LogInfo(
-					"found creature: " + curPhysicalObject.GetType().ToString() +
-					" distance: " + minDistance.ToString() +
-					" visual contact: " + self.room.VisualContact(self.mainBodyChunk.pos, curBodyChunk.pos).ToString() +
-					" health: " + ((curPhysicalObject as Creature).State as HealthState).health.ToString()
-				);
-
 				if (minDistance > CentiwingPlayerData.shockRange) continue;
 				if (!self.room.VisualContact(self.mainBodyChunk.pos, curBodyChunk.pos)) continue;
 
 				(curPhysicalObject as Creature).Violence(self.mainBodyChunk, null, curBodyChunk, null, Creature.DamageType.Electric, CentiwingPlayerData.shockDamage, CentiwingPlayerData.shockStun);
 				(curPhysicalObject as Creature).Stun(CentiwingPlayerData.shockStun);
-
-				Logger.LogInfo(
-					"new health: " + ((curPhysicalObject as Creature).State as HealthState).health.ToString()
-				);
 			}
 		}
 	}
