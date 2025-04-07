@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 #pragma warning disable CS0618
 
 [module: UnverifiableCode]

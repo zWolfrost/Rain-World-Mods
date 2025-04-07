@@ -19,14 +19,14 @@
 		"throw_skill": 2,
 		"diet": {
 			"base": "White",
-			"corpses": 0.5,
-			"meat": 0.5,
-			"plants": 0.5
+			"corpses": 1,
+			"meat": 1,
+			"plants": 1
 		},
 		"karma": 0,
 		"karma_cap": 9,
-		"food_min": 5,
-		"food_max": 11,
+		"food_min": 4,
+		"food_max": 6,
 		"world_state": ["Spear", "Red"],
 		"start_room": ["SI_A09x", "SI_S04"],
 

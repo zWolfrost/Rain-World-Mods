@@ -10,8 +10,8 @@ public partial class CentiwingPlayerData
 	public const float offsetWingsTop = 10f;
 	public const float offsetWingsBottom = 26f;
 	public const float distanceWingsTop = 2f;
-	public const float distanceWingsBottom = 6f;
-	public const float wingCrouchVertAdj = 8f;
+	public const float distanceWingsBottom = 4f;
+	public const float wingCrouchVertAdj = 2f;
 
 	public const float rotationWingsTop = -70f;
 	public const float rotationWingsBottom = 65f;
@@ -188,22 +188,21 @@ public partial class Plugin
 
 		// Wings // Borrowed from the beecat mod. I have no intention of cleaning it up. I'm sorry.
 		{
-			var vector2 = Vector2.Lerp(bodyLerp, headLerp, 0.5f);
+			var playerPos = Vector2.Lerp(bodyLerp, headLerp, 0.5f);
 			var normalized = (bodyLerp - headLerp).normalized;
-			var a = Custom.PerpendicularVector(-normalized);
+			var perpVector = Custom.PerpendicularVector(-normalized);
 			var num = Custom.AimFromOneVectorToAnother(-normalized, normalized);
 
 			for (var i = 0; i < 2; i++)
 			{
 				for (var j = 0; j < 2; j++)
 				{
-					var num7 = (j == 0 ? CentiwingPlayerData.offsetWingsTop : CentiwingPlayerData.offsetWingsBottom) - 20 + 3f * Mathf.Abs(rotLerp.x);
-					var num8 = (j == 0 ? -20f : 24f) - 20;
-					var d = (j == 0 ? CentiwingPlayerData.distanceWingsTop : CentiwingPlayerData.distanceWingsBottom) * (0.2f + 0.8f * Mathf.Abs(rotLerp.y)) * Mathf.Lerp(1f, 0.85f, Mathf.InverseLerp(0.5f, 0f, centiwing.wingDeployment[i, j]));
-					var vector3 = vector2 + normalized * num7 + a * d * (i == 0 ? -1f : 1f) + a * rotLerp.x * Mathf.Lerp(-3f, -5f, Mathf.InverseLerp(0.5f, 0f, centiwing.wingDeployment[i, j]));
+					var off = (j == 0 ? CentiwingPlayerData.offsetWingsTop : CentiwingPlayerData.offsetWingsBottom) - 20 + 3f * Mathf.Abs(rotLerp.x);
+					var dist = (j == 0 ? CentiwingPlayerData.distanceWingsTop : CentiwingPlayerData.distanceWingsBottom) * Mathf.Lerp(1f, 0.85f, Mathf.InverseLerp(0.5f, 0f, centiwing.wingDeployment[i, j]));
+					var wingPos = playerPos + normalized * off + perpVector * dist * (i == 0 ? -1f : 1f) + perpVector * rotLerp.x * Mathf.Lerp(-3f, -5f, Mathf.InverseLerp(0.5f, 0f, centiwing.wingDeployment[i, j]));
 
-					sLeaser.sprites[centiwing.WingSprite(i, j)].x = vector3.x - camPos.x;
-					sLeaser.sprites[centiwing.WingSprite(i, j)].y = vector3.y - camPos.y;
+					sLeaser.sprites[centiwing.WingSprite(i, j)].x = wingPos.x - camPos.x;
+					sLeaser.sprites[centiwing.WingSprite(i, j)].y = wingPos.y - camPos.y;
 
 					if (Mathf.Abs(num) < 105) centiwing.wingYAdjust = Mathf.Lerp(centiwing.wingYAdjust, CentiwingPlayerData.wingCrouchVertAdj, 0.05f);
 					else centiwing.wingYAdjust = Mathf.Lerp(centiwing.wingYAdjust, 0, 0.05f);
@@ -235,14 +234,14 @@ public partial class Plugin
 						num10 = Mathf.Lerp(rotationMin, rotationMax, num10);
 
 						sLeaser.sprites[centiwing.WingSprite(i, j)].scaleX = Mathf.Pow(Mathf.Max(0f, Mathf.Lerp(Mathf.Abs(rotLerp.y), 1f, Mathf.Abs(0.5f - num10) * 1.4f)), 1f) * (i == 0 ? 1f : -1f) * CentiwingPlayerData.wingLength;
-						sLeaser.sprites[centiwing.WingSprite(i, j)].rotation = num - 180f + (num8 + num10) * (i == 0 ? 1f : -1f);
+						sLeaser.sprites[centiwing.WingSprite(i, j)].rotation = num - 180f + ((j == 0 ? -20f : 24f) - 20 + num10) * (i == 0 ? 1f : -1f);
 					}
 					else
 					{
 						float rotation = (j == 0) ? CentiwingPlayerData.rotationWingsTop : CentiwingPlayerData.rotationWingsBottom;
 
 						sLeaser.sprites[centiwing.WingSprite(i, j)].scaleX = (i == 0 ? 1f : -1f) * CentiwingPlayerData.wingLength;
-						sLeaser.sprites[centiwing.WingSprite(i, j)].rotation = Custom.AimFromOneVectorToAnother(Vector2.Lerp(self.player.bodyChunks[1].lastPos, self.player.bodyChunks[1].pos, timeStacker), vector3) - rotation * (i == 0 ? 1f : -1f);
+						sLeaser.sprites[centiwing.WingSprite(i, j)].rotation = Custom.AimFromOneVectorToAnother(bodyLerp, wingPos) - rotation * (i == 0 ? 1f : -1f);
 					}
 				}
 			}
