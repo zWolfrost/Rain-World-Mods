@@ -23,9 +23,6 @@ public partial class CentiwingPlayerData
 	public const string wingColor = "FFFFFF";
 
 	public int firstWingSprite;
-	public float[,] wingDeployment = new float[2, 2];
-   public float[,] wingDeploymentSpeed = new float[2, 2];
-	public float wingDeploymentGetTo;
 	public float wingOffset;
 	public float wingTimeAdd;
 	public Vector2 zRotation;
@@ -66,7 +63,7 @@ public partial class CentiwingPlayerData
 
 	// Scales //
 	public const int scalesNumber = 3;
-	public const string scalesColor = "0c0d0e";
+	public const string scalesColor = "121212";
 
 	public int firstScalesSprite;
 }
@@ -179,8 +176,7 @@ public partial class Plugin
 		CentiwingPlayerData centiwing = self.player.Centiwing();
 		if (!centiwing.IsCentiwing) return;
 
-		var animationOffset = GetAnimationOffset(self);
-
+		Vector2 animationOffset = GetAnimationOffset(self);
 		Vector2 bodyLerp = Vector2.Lerp(self.player.bodyChunks[1].lastPos, self.player.bodyChunks[1].pos, timeStacker);
 		Vector2 headLerp = Vector2.Lerp(self.player.bodyChunks[0].lastPos, self.player.bodyChunks[0].pos, timeStacker);
 		Vector2 rotLerp = Vector3.Slerp(centiwing.lastZRotation, centiwing.zRotation, timeStacker);
@@ -197,9 +193,10 @@ public partial class Plugin
 			{
 				for (var j = 0; j < 2; j++)
 				{
+					var deployment = centiwing.isGliding ? 1f : 0.9f;
 					var off = (j == 0 ? CentiwingPlayerData.offsetWingsTop : CentiwingPlayerData.offsetWingsBottom) - 20 + 3f * Mathf.Abs(rotLerp.x);
-					var dist = (j == 0 ? CentiwingPlayerData.distanceWingsTop : CentiwingPlayerData.distanceWingsBottom) * Mathf.Lerp(1f, 0.85f, Mathf.InverseLerp(0.5f, 0f, centiwing.wingDeployment[i, j]));
-					var wingPos = playerPos + normalized * off + perpVector * dist * (i == 0 ? -1f : 1f) + perpVector * rotLerp.x * Mathf.Lerp(-3f, -5f, Mathf.InverseLerp(0.5f, 0f, centiwing.wingDeployment[i, j]));
+					var dist = (j == 0 ? CentiwingPlayerData.distanceWingsTop : CentiwingPlayerData.distanceWingsBottom) * Mathf.Lerp(1f, 0.85f, Mathf.InverseLerp(0.5f, 0f, deployment));
+					var wingPos = playerPos + normalized * off + perpVector * dist * (i == 0 ? -1f : 1f) + perpVector * rotLerp.x * Mathf.Lerp(-3f, -5f, Mathf.InverseLerp(0.5f, 0f, deployment));
 
 					sLeaser.sprites[centiwing.WingSprite(i, j)].x = wingPos.x - camPos.x;
 					sLeaser.sprites[centiwing.WingSprite(i, j)].y = wingPos.y - camPos.y;
@@ -213,7 +210,7 @@ public partial class Plugin
 					sLeaser.sprites[centiwing.WingSprite(i, j)].alpha = 0.6f;
 					sLeaser.sprites[centiwing.WingSprite(i, j)].color = Custom.hexToColor(CentiwingPlayerData.wingColor);
 
-					if (centiwing.wingDeployment[i, j] == 1f)
+					if (centiwing.isGliding)
 					{
 						float num10;
 						float rotationMin;
@@ -252,11 +249,11 @@ public partial class Plugin
 		{
 			var antennaePos = new Vector2(sLeaser.sprites[3].x + CentiwingPlayerData.antennaeOffsetX, sLeaser.sprites[3].y + CentiwingPlayerData.antennaeOffsetY);
 
-			sLeaser.sprites[centiwing.firstAntennaeSprite].scaleX = sLeaser.sprites[3].scaleX * 1.3f;
-			sLeaser.sprites[centiwing.firstAntennaeSprite].scaleY = 1.3f;
-			sLeaser.sprites[centiwing.firstAntennaeSprite].rotation = sLeaser.sprites[3].rotation;
 			sLeaser.sprites[centiwing.firstAntennaeSprite].x = antennaePos.x;
 			sLeaser.sprites[centiwing.firstAntennaeSprite].y = antennaePos.y;
+			sLeaser.sprites[centiwing.firstAntennaeSprite].rotation = sLeaser.sprites[3].rotation;
+			sLeaser.sprites[centiwing.firstAntennaeSprite].scaleX = sLeaser.sprites[3].scaleX * 1.3f;
+			sLeaser.sprites[centiwing.firstAntennaeSprite].scaleY = 1.3f;
 			sLeaser.sprites[centiwing.firstAntennaeSprite].element = Futile.atlasManager.GetElementWithName("centiwing_antennae_front");
 			sLeaser.sprites[centiwing.firstAntennaeSprite].color = Custom.hexToColor(CentiwingPlayerData.antennaeColor);
 		}
@@ -301,11 +298,10 @@ public partial class Plugin
 				Vector2 vector = Vector2.Lerp((self.owner.bodyChunks[0].lastPos + self.owner.bodyChunks[1].lastPos) / 2f, (self.owner.bodyChunks[0].pos + self.owner.bodyChunks[1].pos) / 2f, timeStacker);
 				vector -= (i - CentiwingPlayerData.chestOffset) * 5.2f * (bodyLerp - headLerp).normalized;
 
-				sLeaser.sprites[curSprite].x = vector.x - camPos.x;
-				sLeaser.sprites[curSprite].y = vector.y - camPos.y;
 				Vector2 normalized = self.player.mainBodyChunk.vel.normalized;
-				sLeaser.sprites[curSprite].x += self.lookDirection.x + normalized.x;
-				sLeaser.sprites[curSprite].y += self.lookDirection.y + normalized.y;
+
+				sLeaser.sprites[curSprite].x = vector.x - camPos.x + self.lookDirection.x + normalized.x;
+				sLeaser.sprites[curSprite].y = vector.y - camPos.y + self.lookDirection.y + normalized.y;
 				sLeaser.sprites[curSprite].rotation = Custom.AimFromOneVectorToAnother(self.owner.bodyChunks[1].pos, self.owner.bodyChunks[0].pos);
 
 				if (self.player.bodyMode == Player.BodyModeIndex.Crawl) sLeaser.sprites[curSprite].scaleX = 0.5f;
@@ -381,38 +377,8 @@ public partial class Plugin
 		CentiwingPlayerData centiwing = self.player.Centiwing();
 		if (!centiwing.IsCentiwing) return;
 
-		if (centiwing.isGliding) centiwing.wingDeploymentGetTo = 1f;
-		else centiwing.wingDeploymentGetTo = 0.9f;
-
 		centiwing.lastZRotation = centiwing.zRotation;
-		centiwing.zRotation = Vector2.Lerp(centiwing.zRotation, Custom.DirVec(self.player.bodyChunks[1].pos, self.player.bodyChunks[0].pos), 0.15f);
-		centiwing.zRotation = centiwing.zRotation.normalized;
-
-		for (var i = 0; i < 2; i++)
-		{
-			for (var j = 0; j < 2; j++)
-			{
-				if (self.player.Consious)
-				{
-					if (Random.value < 0.033333335f)
-					{
-						centiwing.wingDeploymentSpeed[i, j] = 0.6f;
-					}
-					else if (centiwing.wingDeployment[i, j] < centiwing.wingDeploymentGetTo)
-					{
-						centiwing.wingDeployment[i, j] = Mathf.Min(centiwing.wingDeployment[i, j] + centiwing.wingDeploymentSpeed[i, j], centiwing.wingDeploymentGetTo);
-					}
-					else if (centiwing.wingDeployment[i, j] > centiwing.wingDeploymentGetTo)
-					{
-						centiwing.wingDeployment[i, j] = Mathf.Max(centiwing.wingDeployment[i, j] - centiwing.wingDeploymentSpeed[i, j], centiwing.wingDeploymentGetTo);
-					}
-				}
-				else if (centiwing.wingDeployment[i, j] == 1f)
-				{
-					centiwing.wingDeployment[i, j] = 0.9f;
-				}
-			}
-		}
+		centiwing.zRotation = Vector2.Lerp(centiwing.zRotation, Custom.DirVec(self.player.bodyChunks[1].pos, self.player.bodyChunks[0].pos), 0.15f).normalized;
 
 		centiwing.wingOffset += 1f / Random.Range(50, 60);
 		centiwing.wingTimeAdd += 1f;
